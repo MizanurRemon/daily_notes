@@ -44,6 +44,26 @@ app.post("/registration", function (req, res) {
 
 });
 
+app.get("/checkuser", function (req, res) {
+
+    let sqlQuery = "SELECT COUNT(phone) AS namesCount FROM `users` where phone = ?";
+
+    con.query(sqlQuery, [req.query.phone], function (err, results) {
+
+        if (err) {
+            console.log(err);
+        } else {
+            var len = results[0].namesCount;
+
+           
+                res.json(String(len));
+            
+            
+        }
+
+    });
+});
+
 //notesadd
 app.post("/addnotes", function (req, res) {
 
@@ -86,13 +106,9 @@ app.post("/deletenotes", function (req, res) {
 
 
 //updatenotes
-app.put("/updatenotes", function (req, res) {
+app.post("/updatenotes", function (req, res) {
 
-    let id = req.body.noteID;
-    let n_title = req.body.title;
-    let n_note = req.body.note;
-
-    let sqlQuery = "UPDATE `notes` SET title= ?, note= ? WHERE noteID = ?";
+    let sqlQuery = "UPDATE `notes` SET `title`=?,`note`=? WHERE noteID = ?";
 
     con.query(sqlQuery, [req.body.title, req.body.note, req.body.noteID], function (err, rows) {
 
