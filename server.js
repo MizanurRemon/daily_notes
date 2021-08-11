@@ -104,7 +104,7 @@ app.post("/deletenotes", function (req, res) {
 
 });
 
-
+var f;
 //updatenotes
 app.post("/updatenotes", function (req, res) {
 
